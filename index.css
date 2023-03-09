@@ -1,0 +1,134 @@
+/* Main Content */
+#about-us {
+    background-color: rgba(255, 0, 0, 0.754);
+    padding: 30px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    margin-bottom: 8px;
+}
+
+#about-us h1 {
+    font-size: 35px;
+    width: 600px;
+}
+
+#about-us p {
+    width: 600px;
+}
+
+#about-us div a {
+    color: white;
+    text-decoration: none;
+    width: 250px;
+}
+
+#about-us div a p {
+    width: 40px;
+}
+
+#about-us div a, #about-us div a p {
+    display: inline-block;
+    transition: transform 0.5s ease-in-out;
+}
+
+#about-us div a:hover p {
+    transform: translateX(20%);
+}
+
+/* @media only screen and (max-width: 1330px) {
+    #about-us div a p {
+        display: none;
+    }
+
+    #about-us div a {
+        text-decoration: underline;
+    }
+
+    #about-us div a:hover {
+        text-decoration: none;
+    }
+} */
+
+#about-us img {
+    width: 400px;
+    float: right;
+    margin-left: 50px;
+    border-radius: 15px;
+}
+
+#want-to-join {
+    background-color: rgba(66, 47, 235, 0.711);
+    padding: 20px;
+    left: 0;
+    right: 0;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 15px;
+}
+
+#want-to-join div {
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#want-to-join h1 {
+    font-size: 35px;
+    width: 600px;
+}
+
+#want-to-join p {
+    width: 600px;
+}
+
+#sign-up {
+    padding: 13px;
+    border-radius: 15px;
+    font-size: 17px;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+#sign-up:disabled {
+    cursor: not-allowed;
+}
+
+@media only screen and (max-width: 1120px) {
+    #about-us h1 {
+        font-size: 35px;
+        width: calc(100% - 20px);
+    }
+    
+    #about-us p {
+        width: calc(100% - 20px);
+    }
+
+    #about-us img {
+        width: calc(100% - 10px);
+    }
+
+    #about-us {
+        flex-direction: column;
+    }
+
+    #want-to-join div {
+        flex-direction: column;
+    }
+
+    #want-to-join h1 {
+        font-size: 35px;
+        width: calc(100% - 5px);
+    }
+    
+    #want-to-join p {
+        width: calc(100% - 5px);
+    }
+}
