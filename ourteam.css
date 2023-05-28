@@ -57,7 +57,7 @@
     margin-top: -20px;
 }
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 415px) {
     #cards {
         justify-items: center;
     }
@@ -73,4 +73,12 @@
     .card img {
         margin-right: 0;
     }
+}
+
+i[data-type="role-year"] {
+    font-size: 13px;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 0.5px 10px;
+    font-style: normal;
 }
