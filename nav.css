@@ -46,6 +46,14 @@ hr {
     text-decoration: underline;
 }
 
+@media only screen and (min-width: 922px) and (max-width: 1136px) {
+    #links {
+        width: calc(100% - 30px);
+        justify-content: left;
+        margin-top: 0;
+    }
+}
+
 @media only screen and (max-width: 922px) {
     #links {
         margin-top: 0;
