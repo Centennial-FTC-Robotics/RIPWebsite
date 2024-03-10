@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/assets/imgs/2022-2023_logo.png" rel="icon" type="image/png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../common.css">
+    <title>FTC Java Guide</title>
+</head>
+<body>
+    <div id="nav"></div>
+    <script>
+        $('#nav').load('../../nav.html');
+    </script>
+    <main id="main">
+        <h1 class="title">Control Flows</h1>
+        <section id="if-statements">
+            <h1 class="title">If-Statements</h1>
+            <h2 class="mini-title">If</h2>
+            <p>An if-statement will only run the code inside of it if the set condition evaluates to true</p>
+            <p>It follows this syntax:</p>
+            <div class="code-wrapper"><code>
+                if (condition) { <br>
+                &nbsp;&nbsp;// Run some code <br>
+                }
+            </code></div>
+            <p>Let's take a look at some examples:</p>
+            <div class="code-wrapper"><code>
+                // Ex 1 <br>
+                boolean gameOver = true; <br>
+                // The if-statement will run as gameOver does equal false <br>
+                if (gameOver == true) { <br>
+                &nbsp;&nbsp;System.out.println("Game Over!"); <br>
+                } <br><br>
+
+                // Ex 2 <br>
+                int num = 44; <br>
+                // The if-statement will not run as num does equal 44 so 44 != 44 <br>
+                if (num != 44) { <br>
+                &nbsp;&nbsp;System.out.println("num is not 44"); <br>
+                }
+            </code></div>
+        </section>
+        <section id="else">
+            <h2 class="mini-title">Else</h2>
+            <span class="ul-wrapper">
+                <ul>
+                    <li>This is the ending of an if-statement</li>
+                    <li>Every else statement MUST be with an if-statement, but every if-statement doesn't need to be with an else statement (basically "else" can't stand alone, but "if" can)</li>
+                    <li>There can only be one else statement in every if-else block (you can't do if-else-else)</li>
+                    <li>The else statement will only run if the condition in the if-statement was false (and consequently the if-statement did not execute)</li>
+                    <li>The else statement MUST be the last statement in an if-else or if-elseif-else block</li>
+                    <li>
+                        The syntax looks like this:
+                        <div class="code-wrapper"><code>
+                            if (condition) { <br>
+                            &nbsp;&nbsp;// Code <br>
+                            } else { <br>
+                            &nbsp;&nbsp;// Some other code <br>
+                            }
+                        </code></div>
+                    </li>
+                </ul>
+            </span>
+            <p>Let's look at some examples:</p>
+            <div class="code-wrapper"><code>
+                // Ex 1 <br>
+                boolean gameOver = false; <br>
+                if (gameOver == true) { <br>
+                    // Not going to execute as gameOver is not true <br>
+                    System.out.println("Game Over :("); <br>
+                } else { <br>
+                    // This will run as the if condition returned false <br>
+                    System.out.println("The game is still going!"); <br>
+                } <br><br>
+
+                // Ex 2 <br>
+                double num = 3.01; <br>
+                if (num == 3.01) { <br>
+                    // This will run as num does equal 3.01 <br>
+                    System.out.println("num is 3.01"); <br>
+                } else { <br>
+                    // This will not run as the if condition returned true <br>
+                    System.out.println("num is not equal to 3.01"); <br>
+                }
+            </code></div>
+        </section>
+        <section id="elseif">
+            <h2 class="mini-title">Else If</h2>
+            <span class="ul-wrapper">
+                <ul>
+                    <li>This is the last part of the if, else, and now else-if trio</li>
+                    <li>An else-if statement MUST be with an if-statement, but every if-statement doesn't need to be with an else-if statement (basically "else if" can't stand alone, but "if" can)</li>
+                    <li>Additionally, every else-if statement doesn't need to be with an else statement, nor does every else statement need to be with an else-if statement</li>
+                    <li>Every else-if needs to be after the if-statement, but before an else statement (if there is an else statement)</li>
+                    <li>
+                        Unlike the else statement, the else if statement accepts a condition. Like this:
+                        <div class="code-wrapper"><code>
+                            if (condition) { <br>
+                            &nbsp;&nbsp;// Code <br>
+                            } else if (condition) { <br>
+                            &nbsp;&nbsp;// Some other code <br>
+                            }
+                        </code></div>
+                    </li>
+                    <li>These are secondary conditions that will be tested if the main if-statement evaluates to false</li>
+                    <li>You can have unlimited else-if statements in an if-elseif or if-elseif-else block</li>
+                </ul>
+            </span>
+            <p>Now... time for some examples:</p>
+            <div class="code-wrapper"><code>
+                // Ex 1 <br>
+                int num = 0; <br>
+                if (num == 0) { <br>
+                &nbsp;&nbsp;// This will run as num is 0 <br>
+                &nbsp;&nbsp;System.out.println("num is 0"); <br>
+                } else if (num == 1) { <br>
+                &nbsp;&nbsp;System.out.println("num is 1"); <br>
+                } else if (num == 2) { <br>
+                &nbsp;&nbsp;System.out.println("num is 2"); <br>
+                } else { <br>
+                &nbsp;&nbsp;System.out.println("num is not 0, 1, or 2"); <br>
+                } <br><br>
+
+                // Ex 2 <br>
+                int num = 1; <br>
+                if (num == 0) { <br>
+                &nbsp;&nbsp;// This will not run as num is not 0 <br>
+                &nbsp;&nbsp;System.out.println("num is 0"); <br>
+                } else if (num == 1) { <br>
+                &nbsp;&nbsp;// This will run as num is 1 <br>
+                &nbsp;&nbsp;System.out.println("num is 1"); <br>
+                } else if (num == 2) { <br>
+                &nbsp;&nbsp;System.out.println("num is 2"); <br>
+                } else { <br>
+                &nbsp;&nbsp;System.out.println("num is not 0, 1, or 2"); <br>
+                } <br><br>
+
+                // Ex 3 <br>
+                int num = 10; <br>
+                if (num == 0) { <br>
+                &nbsp;&nbsp;// This will not run as num is not 0 <br>
+                &nbsp;&nbsp;System.out.println("num is 0"); <br>
+                } else if (num == 1) { <br>
+                &nbsp;&nbsp;// This will not run as num is not 1 <br>
+                &nbsp;&nbsp;System.out.println("num is 1"); <br>
+                } else if (num == 2) { <br>
+                &nbsp;&nbsp;// This will not run as num is not 2 <br>
+                &nbsp;&nbsp;System.out.println("num is 2"); <br>
+                } else { <br>
+                &nbsp;&nbsp;// This will run as all the previous conditions failed <br>
+                &nbsp;&nbsp;System.out.println("num is not 0, 1, or 2"); <br>
+                }
+            </code></div>
+        </section>
+        <section id="for-loops">
+            <h2 class="title">For Loops</h2>
+            <p>For loops are, as the name suggests, loops that will continuously execute a block of code until their condition becomes false.<br>
+            To use a for loop, you can use a syntax like this:</p>
+            <div class="code-wrapper"><code>
+                for (variable declaration; condition; modify variable) { <br>
+                &nbsp;&nbsp;// Code <br>
+                }
+            </code></div>
+            <p>Let's use this in some examples:<br>
+            The following code will output 100 numbers to the console.<br>
+            For loops can be deceiving, though this for loop looks like it prints 100 numbers from 1 - 100, it actually starts at 0 and prints 100 numbers up until 100. This means it will print 0, 1, 2, 3... 98, and 99. It will never print 100 as the condition is i < 100, and 100 is not less than 100.</p>
+            <div class="code-wrapper"><code>
+                for (int i = 0; i < 100; i++) { <br>
+                &nbsp;&nbsp;System.out.println(i); <br>
+                }
+            </code></div>
+            <p>These for loops would do as you (likely) thought the for loop above did:</p>
+            <div class="code-wrapper"><code>
+                for (int i = 1; i <= 100; i++) { <br>
+                &nbsp;&nbsp;System.out.println(i); <br>
+                } <br>
+                // or <br>
+                for (int i = 1; i < 101; i++) { <br>
+                &nbsp;&nbsp;System.out.println(i); <br>
+                }
+            </code></div>
+            <p>These for loops will print 1, 2, 3... 99, 100 as they both start at 1 and end at 100 or before 101.<br>
+            Additionally, as you can see, I am using the variable <code>i</code> as that is just the standard convention, but any variable name of type will work.</p>
+        </section>
+        <section id="array-traversal">
+            <h2 class="mini-title">Array Traversal with For Loops</h2>
+            <p>Using for loops, we can also print out the contents of an array.<br>
+            Basic Idea:</p>
+            <span class="ul-wrapper">
+                <ul>
+                    <li>Start at <code>i = 0</code> (as arrays start at index 0)</li>
+                    <li>Go until the array's length, but stop at one less than the array's length</li>
+                    <li>Print every value using <code>i</code> as a changing index</li>
+                </ul>
+            </span>
+            <p>Put these ideas together:</p>
+            <div class="code-wrapper"><code>
+                String[] fruits = {“Apple”, “Banana”, “Orange”, “Pineapple”, “Jackfruit”}; <br>
+                for (int i = 0; i < fruits.length; i++) { <br>
+                &nbsp;&nbsp;System.out.println(fruits[i]); <br>
+                }
+            </code></div>
+            <p>
+                This for loop will go through the array, fruits, and print out the values at <code>fruits[0]</code>, <code>fruits[1]</code>, <code>fruits[2]</code>, <code>fruits[3]</code>, and <code>fruits[4]</code>.
+                So it will print: 
+                <code><br>
+                Apple <br>
+                Banana <br>
+                Orange <br>
+                Pineapple <br>
+                Jackfruit
+                </code>
+            </p>
+        </section>
+        <section id="enhanced-for-loops">
+            <h2 class="mini-title">Enhanced For Loops</h2>
+            <p>As you may have noticed, normal for loops can be a bit bulky, especially if all you're trying to do is traverse an array. This is where Enhanced For Loops can be used (also called for-each loops).<br>
+            Enhanced for loops have a syntax like this:</p>
+            <div class="code-wrapper"><code>
+                for (type name : arrName) { <br>
+                &nbsp;&nbsp;// code <br>
+                }
+            </code></div>
+            <p>Let's use this in a few examples... the equivalent normal for loop will also be shown.<br>
+            Let's start off by revamping our previous example</p>
+            <div class="code-wrapper"><code>
+                // Ex 1 <br>
+                String[] fruits = {“Apple”, “Banana”, “Orange”, “Pineapple”, “Jackfruit”}; <br>
+
+                // New <br>
+                for (String fruit : fruits) { <br>
+                &nbsp;&nbsp;System.out.println(fruit); <br>
+                } <br>
+
+                // Old <br>
+                for (int i = 0; i < fruits.length; i++) { <br>
+                &nbsp;&nbsp;System.out.println(fruits[i]); <br>
+                } <br><br>
+
+                // Ex 2 <br>
+                int[] numbers = {1, 2, 3, 4}; <br>
+
+                // New <br>
+                for (int num : numbers) { <br>
+                &nbsp;&nbsp;System.out.println(num); <br>
+                } <br>
+
+                // Old <br>
+                for (int i = 0; i < numbers.length; i++) { <br>
+                &nbsp;&nbsp;System.out.println(numbers[i]); <br>
+                }
+            </code></div>
+            <p>While working with enhanced for loops, there is one VERY important thing to note, which is that the variable you declare <code>(String fruit : fruits)</code> is a copy of the value in <code>fruits</code>. This means that modifying <code>fruit</code>, will NOT change the corresponding value in <code>fruits</code>. To change values, you must use a normal for loop.<br>
+            Let's see what this in action:</p>
+            <div class="code-wrapper"><code>
+                int[] numbers = {1, 2, 3, 4, 5}; <br>
+                // Won't work as expected <br>
+                for (int number : numbers) { <br>
+                &nbsp;&nbsp;number++; // Trying to add one to each value in numbers[] <br>
+                }
+            </code></div>
+            <p>The value of numbers is still [1, 2, 3, 4, 5] even after that for loop runs as <code>number</code> is a copy of the value and not the same (<code>number</code> is not <code>numbers[i]</code>).<br>
+            To do this properly, you must use a normal for loop, like this:</p>
+            <div class="code-wrapper"><code>
+                for (int i = 0; i < numbers.length; i++) { <br>
+                &nbsp;&nbsp;numbers[i]++; <br>
+                }
+            </code></div>
+            <p>This will do as you expected and change <code>numbers</code> to <code>[2, 3, 4, 5, 6]</code>.<br>
+            Still don't get it? Here's what a normal versus an enhanced for loop does:</p>
+            <div class="code-wrapper"><code>
+                // Normal <br>
+                int start = 1; // Starting array <br>
+                x++; // Changes the value as expected <br><br>
+
+                // Enhanced <br>
+                int start = 1; // Starting array <br>
+                int copy = start; // Enhanced for loop makes a copy <br>
+                copy++; // This only changes copy, but not the original start variable
+            </code></div>
+        </section>
+        <section id="while-loops">
+            <h1 class="title">While Loops</h1>
+            <p>While loops are similar to for loops, except they can run indefinitely. As you saw previously, the number of times a for loop runs is defined when it is written. But when a while loop is written, it can be written to run once, twice, or infinitely (do not recommend).<br>
+            What is the syntax for a while loop?</p>
+            <div class="code-wrapper"><code>
+                while (condition) { <br>
+                &nbsp;&nbsp;// Code <br>
+                }
+            </code></div>
+            <p>Like for loops, while loops will run until their condition is met (evaluates to false). This also means it is possible to create an infinitely running while loop by giving a condition of true, as true will never be false, so the loop will run forever.</p>
+            <div class="code-wrapper"><code>
+                // Runs forever <br>
+                // WARNING: May create a lot of lag and even crash your computer <br>
+                while (true) { <br>
+                &nbsp;&nbsp;// Code <br>
+                }
+            </code></div>
+            <p>Now let's see some while loops in action!</p>
+            <div class="code-wrapper"><code>
+                int num = 0; <br>
+                while (num < 10) { <br>
+                &nbsp;&nbsp;System.out.println(num); <br>
+                }
+            </code></div>
+            <p>This loop looks like it will run 10 times printing the numbers 0, 1... 8, and 9. But beware! We never increment num, so num will always be less than 10, so this loop is actually infinite.<br>Let's fix that while loop!</p>
+            <div class="code-wrapper"><code>
+                int num = 0; <br>
+                while (num < 10) { <br>
+                &nbsp;&nbsp;System.out.println(num); <br>
+                &nbsp;&nbsp;num++; <br>
+                }
+            </code></div>
+            <p>This will work as expected, outputting 0, 1... 8, and 9. <br>
+            What is the for loop version of this?</p>
+            <div class="code-wrapper"><code>
+                for (int i = 0; i < 10; i++) { <br>
+                &nbsp;&nbsp;System.out.println(i); <br>
+                }
+            </code></div>
+        </section>
+    </main>
+</body>
+</html>

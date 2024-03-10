@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/assets/imgs/2022-2023_logo.png" rel="icon" type="image/png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../common.css">
+    <title>FTC Java Guide</title>
+    <style>
+        main > section {
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <div id="nav"></div>
+    <script>
+        $('#nav').load('../../nav.html');
+    </script>
+    <main id="main">
+        <h1 class="title">Variables Part 2</h1>
+        <section id="types">
+            <h2 class="mini-title">Variable Types</h2>
+            <p>Variables are perhaps the most important concept in any programming language. You can think of them as boxes that can hold stuff. Java happens to be a statically typed language, meaning that the boxes are also tagged with a label (type) about what can be inside it. Below are some of the types in Java:</p>
+            <p><b>int</b></p>
+            <span class="ul-wrapper">
+                <ul>
+                    <li>Stands for integer (whole number)</li>
+                    <li>Values range from -2,147,483,648 to +2,147,483,647</li>
+                    <li>Takes up 4 bytes of data</li>
+                </ul>
+            </span>
+            <p><b>double</b></p>
+            <span class="ul-wrapper">
+                <ul>
+                    <li>Stands for double precision floating point number</li>
+                    <li>In case you are wondering there is a single precision floating point number using the keyword 'float'</li>
+                    <li>A "binary version" of scientific notation</li>
+                    <li>Usually used to store decimal values, but there will be precision errors</li>
+                    <li>Takes up 8 bytes of space</li>
+                </ul>
+            </span>
+            <p><b>boolean</b></p>
+            <span class="ul-wrapper">
+                <ul>
+                    <li>A true or false value</li>
+                    <li>Takes up 1 byte of space</li>
+                </ul>
+            </span>
+            <p><b>char</b></p>
+            <span class="ul-wrapper">
+                <ul>
+                    <li>Stands for character</li>
+                    <li>A singular ASCII value</li>
+                    <li>Takes up 1 byte of space</li>
+                </ul>
+            </span>
+            <p>Up until this point, all the types are known as <b>primitives</b> and directly hold their values. More often than not however, we would like to have more complicated data structures, and that's where objects come into play. The variable type below is a <b>reference type</b>, which means that it does not directly hold its value.<br>
+            Notice how they start with a capital letter:</p>
+            <p><b>String</b></p>
+            <span class="ul-wrapper">
+                <ul>
+                    <li>Multiple chars stringed together</li>
+                    <li>This type ALWAYS starts with a capital "S"</li>
+                </ul>
+            </span>
+        </section>
+        <section id="usage">
+            <h2 class="mini-title">Variable Declaration & Assignment</h2>
+            <p>Declaring a variable (not giving it a value):</p>
+            <div class="code-wrapper">
+                <code>
+                    type name; <br>
+                    int num; <br>
+                    boolean alive;
+                </code>
+            </div>
+            <p>Assigning a value to an already declared variable:</p>
+            <div class="code-wrapper">
+                <code>
+                    name = value; <br>
+                    num = 3; <br>
+                    alive = true;
+                </code>
+            </div>
+            <p>Declaring and assigning to a variable:</p>
+            <div class="code-wrapper">
+                <code>
+                    type name = value; <br>
+                    int num = 5; <br>
+                    double num2 = 5.275;
+                </code>
+            </div>
+            <p>More examples:</p>
+            <div class="code-wrapper">
+                <code>
+                    String name; <br>
+                    name = "John"; <br>
+                    boolean gameOver = false; <br>
+                    gameOver = true;
+                </code>
+            </div>
+        </section>
+        <section id="scopes">
+            <h2 class="mini-title">Variable Scopes</h2>
+            <p>Variables can only be referenced in the scopes they are declared in and its subscopes. Scopes are surrounded by curly braces. Here's an example:</p>
+            <div class="code-wrapper">
+                <code>
+                    int one = 1; <br>
+                    { <br>
+                    &nbsp;&nbsp;int two = one + one; // Fine <br>
+                    } <br>
+                    int three = one + two; // Error because two can<br>only referenced inside the braces
+                </code>
+            </div>
+            <p>Variable names within a single scope must be unique. However, you can have variables with the same name in different scopes. If one of the scopes is inside the other scope, the variable in the outer scope will be shadowed by the other variable for the duration of the inner scope.</p>
+            <div class="code-wrapper">
+                <code>
+                    int num = 1; <br>
+                    // num is 1 <br>
+                    { <br>
+                    &nbsp;&nbsp;int num = 2; <br>
+                    &nbsp;&nbsp;// num is 2 <br>
+                    } <br>
+                    // num is 1 again
+                </code>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -8,3 +8,7 @@
     align-items: center;
     flex-direction: column;
 }
+
+.ul-wrapper ul li a {
+    color: black;
+}
