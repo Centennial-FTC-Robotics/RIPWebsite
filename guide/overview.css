@@ -12,3 +12,7 @@
 .ul-wrapper ul li a {
     color: black;
 }
+
+.dark .ul-wrapper ul li a {
+    color: white;
+}

@@ -1,0 +1,58 @@
+.interactive {
+    font-family: monospace;
+    font-size: 16px;
+    padding: 5px;
+    line-height: 150%;
+    border-radius: 5px;
+    background-color: #f3f3f3;
+}
+
+.dark .interactive {
+    color: white;
+    background-color: #0c0c0c;
+}
+
+.interactive .container {
+    padding: 3px;
+    border-radius: 3px;
+    user-select: none;
+}
+
+.interactive .container.empty {
+    background-color: #ddd;
+}
+
+.dark .interactive .container.empty {
+    background-color: #222;
+}
+
+.interactive .container:not(.empty) {
+    padding: 0;
+}
+
+.interactive .block {
+    padding: 3px;
+    border-radius: 3px;
+    border: solid 1.5px #aaa;
+    background-color: #eee;
+    cursor: move;
+}
+
+.dark .interactive .block {
+    border-color: #555;
+    background-color: #111;
+}
+
+.interactive button {
+    font-family: monospace;
+    font-size: 16px;
+    line-height: 150%;
+    border-radius: 5px;
+    border-width: 1.5px;
+    border-color: black;
+    background-color: rgb(149, 255, 0);
+}
+
+.dark .interactive button {
+    border-color: white;
+}

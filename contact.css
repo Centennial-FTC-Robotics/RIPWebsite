@@ -1,3 +1,7 @@
 #contact-us div a {
     color: black;
 }
+
+.dark #contact-us div a {
+    color: white;
+}

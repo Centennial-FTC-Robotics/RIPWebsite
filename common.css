@@ -6,6 +6,14 @@ body {
     margin: 0;
 }
 
+body.dark {
+    background-color: black;
+}
+
+.dark * {
+    color: white;
+}
+
 .title {
     font-size: 45px;
 }
