@@ -36,6 +36,28 @@
     border: solid 1.5px #aaa;
     background-color: #eee;
     cursor: move;
+    transition: background-color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
+}
+
+.incorrect {
+    background-color: #f77 !important;
+    border-color: #783838 !important;
+}
+
+.dark .incorrect {
+    background-color: #783838 !important;
+    border-color: #f77 !important;
+}
+
+.correct {
+    background-color: #7f7 !important;
+    border-color: #387838 !important;
+}
+
+.dark .correct {
+    background-color: #387838 !important;
+    border-color: #7f7 !important;
 }
 
 .dark .interactive .block {
@@ -50,9 +72,15 @@
     border-radius: 5px;
     border-width: 1.5px;
     border-color: black;
-    background-color: rgb(149, 255, 0);
+    background-color: rgb(161, 199, 255);
+    border: 0;
 }
 
 .dark .interactive button {
     border-color: white;
+}
+
+.interactive button:hover {
+    filter: brightness(1.2);
+    cursor: pointer;
 }

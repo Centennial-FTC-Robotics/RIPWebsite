@@ -72,19 +72,24 @@ const createBlock = (text, id) => {
 
 const createContainer = (child, id) => {
     const container = document.createElement("span");
+    container.tabIndex = "0";
     container.classList.add("container");
     container.addEventListener("dragover", (e) => {
         if(id === lastID) e.preventDefault();
     });
     container.addEventListener("drop", function(e) {
         e.preventDefault();
+        lastDragged.classList.remove("incorrect");
+        lastDragged.classList.remove("correct");
         if(id !== lastID) return;
         const parent = lastDragged.parentNode;
         console.log(parent)
-        if(!e.target.classList.contains("empty")) {
+        if(!this.classList.contains("empty")) {
             // Swap
             const block1 = parent.firstChild;
             const block2 = this.firstChild;
+            block2.classList.remove("incorrect");
+            block2.classList.remove("correct");
             block1.remove();
             block2.remove();
             parent.appendChild(block2);
@@ -135,14 +140,21 @@ const constructQuiz = (element, id) => {
     }
     const check = document.createElement("button");
     check.textContent = "-Check-";
-    check.addEventListener("mouseup", () => {
+    const gradeQuiz = () => {
         let correct = true;
         for(let i = 0; i < answers.length; i++) {
             const expected = answers[i];
             const actual = checks[i].firstChild?.textContent;
+            if(expected === actual) checks[i].firstChild.classList.add("correct");
+            else if(checks[i].firstChild.classList) checks[i].firstChild.classList.add("incorrect");
             correct &&= (expected === actual);
         }
-        console.log(correct);
+        if(correct) alert("All correct! :)");
+        else alert("Try again...");
+    };
+    check.addEventListener("mouseup", gradeQuiz);
+    check.addEventListener("keydown", (e) => {
+        if(e.key === "Enter") gradeQuiz();
     });
     element.appendChild(check);
 }
