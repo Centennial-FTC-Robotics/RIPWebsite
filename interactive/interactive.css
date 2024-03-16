@@ -5,63 +5,110 @@
     line-height: 150%;
     border-radius: 5px;
     background-color: #f3f3f3;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .dark .interactive {
     color: white;
     background-color: #0c0c0c;
+    color-scheme: dark;
+}
+
+.interactive * {
+  z-index: 0;
+}
+
+.interactive .container.dragging {
+    z-index: 1 !important;
 }
 
 .interactive .container {
+    position: relative;
     padding: 3px;
     border-radius: 3px;
+    -webkit-user-select: none;
     user-select: none;
+    background-color: #ddd;
+    z-index: 0;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.interactive .container:focus {
+    outline: solid black 3px;
+}
+
+.interactive .container.dragging:focus {
+    outline: none;
 }
 
 .interactive .container.empty {
-    background-color: #ddd;
+    outline-width: 1.5px;
 }
 
-.dark .interactive .container.empty {
+.interactive .container.selected {
+    outline: solid #ffdb26 3px !important;
+}
+
+.dark .interactive .container.selected {
+    outline-color: #fff6a1 !important;
+}
+
+.interactive .container.selected.empty {
+    outline-width: 1.5px !important;
+}
+
+.dark .interactive .container:focus {
+    outline-color: white;
+}
+
+.dark .interactive .container {
     background-color: #222;
 }
 
-.interactive .container:not(.empty) {
-    padding: 0;
-}
-
 .interactive .block {
-    padding: 3px;
+    position: absolute;
+    padding-left: 3px;
+    padding-right: 3px;
     border-radius: 3px;
-    border: solid 1.5px #aaa;
+    outline: solid 1.5px #aaa;
     background-color: #eee;
     cursor: move;
-    transition: background-color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out;
+    transition:
+    background-color 0.3s ease-in-out,
+    outline-color 0.3s ease-in-out;
+}
+
+.interactive .container.missing {
+    background-color: #ebb;
+}
+
+.dark .interactive .container.missing {
+    background-color: #411;
 }
 
 .incorrect {
     background-color: #f77 !important;
-    border-color: #783838 !important;
+    outline-color: #783838 !important;
 }
 
 .dark .incorrect {
     background-color: #783838 !important;
-    border-color: #f77 !important;
+    outline-color: #f77 !important;
 }
 
 .correct {
     background-color: #7f7 !important;
-    border-color: #387838 !important;
+    outline-color: #387838 !important;
 }
 
 .dark .correct {
     background-color: #387838 !important;
-    border-color: #7f7 !important;
+    outline-color: #7f7 !important;
 }
 
 .dark .interactive .block {
-    border-color: #555;
+    outline-color: #555;
     background-color: #111;
 }
 
@@ -72,15 +119,22 @@
     border-radius: 5px;
     border-width: 1.5px;
     border-color: black;
-    background-color: rgb(161, 199, 255);
+    background-color: #a1c7ff;
     border: 0;
 }
 
 .dark .interactive button {
+    background-color: #1a4c96;
     border-color: white;
 }
 
-.interactive button:hover {
-    filter: brightness(1.2);
-    cursor: pointer;
+@media (hover: hover) {
+    .interactive button:hover {
+        filter: brightness(1.05);
+        cursor: pointer;
+    }
+}
+
+body.dark {
+  background-color: black;
 }

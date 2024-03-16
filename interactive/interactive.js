@@ -1,9 +1,23 @@
+const emptify = (str) => str.replace(/./g, " ");
+const rectCenter = (rect) => {
+    return [
+        0.5 * (rect.right + rect.left),
+        0.5 * (rect.bottom + rect.top)
+    ];
+}
+const rectCollide = (rect1, rect2) => {
+    let [x, y] = rectCenter(rect1);
+    return (
+        (rect2.left < x) && (x < rect2.right) &&
+        (rect2.top < y) && (y < rect2.bottom)
+    );
+}
+
 const splitBunch = (str) => {
     const names = str.split(/,\s*/);
     for (let i = 0; i < names.length; i++) {
         if (!/".*"/.test(names[i])) throw new Error("no");
         names[i] = names[i].slice(1, -1);
-        console.log(names[i]);
     }
     return names;
 };
@@ -57,15 +71,143 @@ const parseLayout = (str) => {
 
 let lastDragged = null;
 let lastID = -1;
+let lastChangedTouches;
+let lastMousePos;
+let mouseHold = false;
+let selected = null;
+let selectedID = -1;
+const quizContainers = [];
+
+const removeAddons = (obj, forContainer=false) => {
+    if(forContainer) {
+        obj.classList.remove("missing");
+        obj.classList.remove("selected");
+        return;
+    }
+    obj.classList.remove("correct");
+    obj.classList.remove("incorrect");
+}
+
+
+/**
+ * Swaps the content of two containers OR moves the content from one container to another
+ * @param {Element} container1 -First container
+ * @param {Element} container2 -Second container
+ */
+const transferContents = (container1, container2) => {
+    removeAddons(container1, true);
+    removeAddons(container2, true);
+    const empty1 = container1.classList.contains("empty");
+    const empty2 = container2.classList.contains("empty");
+    if (empty1 && empty2) return;
+    if (empty1 && !empty2) {
+        [container1, container2] = [container2, container1];
+    }
+    if (empty1 !== empty2) {
+        // Insert contents of c1 to c2
+        container1.classList.add("empty");
+        container2.classList.remove("empty");
+        const child = container1.lastChild;
+        child.remove();
+        removeAddons(child);
+        container2.textContent = emptify(child.textContent);
+        container2.appendChild(child);
+    }
+    else {
+        // Swap contents of c1 and c2
+        const child1 = container1.lastChild;
+        const child2 = container2.lastChild;
+        child1.remove();
+        child2.remove();
+        removeAddons(child1);
+        removeAddons(child2);
+        container1.textContent = emptify(child2.textContent);
+        container2.textContent = emptify(child1.textContent);
+        container1.appendChild(child2);
+        container2.appendChild(child1);
+    }
+}
+
+const initTransBlock = (block) => {
+    block.parentNode.classList.add("dragging");
+};
+
+const translateBlock = (block, x, y) => {
+    const oldX = Number(block.style.left.slice(0, -2));
+    const oldY = Number(block.style.top.slice(0, -2));
+    block.style.left = `${oldX + x}px`;
+    block.style.top = `${oldY + y}px`;
+};
+
+const snapBlock = (block, id, cancel=false) => {
+    const rect = block.getBoundingClientRect();
+    block.parentNode.classList.remove("dragging");
+    block.style.left = "0px";
+    block.style.top = "0px";
+    if(cancel) return;
+    for (let i = 0; i < quizContainers[id].length; i++) {
+        const container = quizContainers[id][i];
+        const ctnRect = container.getBoundingClientRect();
+        if(rectCollide(rect, ctnRect)) {
+            transferContents(block.parentNode, container);
+            return;
+        }
+    }
+};
 
 const createBlock = (text, id) => {
     const block = document.createElement("span");
+    block.style.left = "0px";
+    block.style.top = "0px";
     block.textContent = text;
-    block.setAttribute("draggable", "true");
     block.classList.add("block");
-    block.addEventListener("dragstart", (e) => {
+    block.addEventListener("touchstart", (e) => {
+        initTransBlock(e.target);
+        lastChangedTouches = e.touches;
+    });
+    block.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        const shiftX = e.changedTouches.item(0).clientX - lastChangedTouches.item(0).clientX;
+        const shiftY = e.changedTouches.item(0).clientY - lastChangedTouches.item(0).clientY;
+        translateBlock(e.target, shiftX, shiftY);
+        lastChangedTouches = e.changedTouches;
+
+        if (Math.random() < 0.001) {
+            let ee = false;
+            while (!ee) {
+                ee = confirm("Tu eres un mono");
+                if (!ee) alert("NO! TU ERES UN MONO");
+                else break;
+            }
+        }
+    });
+    block.addEventListener("touchcancel", (e) => {
+        snapBlock(e.target, id, true);
+    })
+    block.addEventListener("touchend", (e) => {
+        snapBlock(e.target, id);
+    });
+    block.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        initTransBlock(e.target);
+        lastMousePos = {x: e.clientX, y: e.clientY};
         lastDragged = e.target;
         lastID = id;
+        mouseHold = true;
+    });
+    document.addEventListener("mousemove", (e) => {
+        if(!mouseHold) return;
+        const shiftX = e.clientX - lastMousePos.x;
+        const shiftY = e.clientY - lastMousePos.y;
+        translateBlock(lastDragged, shiftX, shiftY);
+        lastMousePos = {x: e.clientX, y: e.clientY};
+    });
+    document.addEventListener("mouseup", (e) => {
+        if(!lastDragged) return;
+        snapBlock(lastDragged, lastID);
+        mouseHold = false;
+        lastDragged = null;
+        lastID = -1;
     });
     return block;
 };
@@ -74,37 +216,27 @@ const createContainer = (child, id) => {
     const container = document.createElement("span");
     container.tabIndex = "0";
     container.classList.add("container");
-    container.addEventListener("dragover", (e) => {
-        if(id === lastID) e.preventDefault();
+    container.addEventListener("keydown", (e) => {
+        if(e.key === "Enter") {
+            if(!selected) {
+                console.log("eoa");
+                selected = container;
+                selectedID = id;
+                container.classList.add("selected");
+            }
+            else {
+                if(id !== selectedID) return;
+                transferContents(selected, e.target);
+                selected = null;
+            }
+        }
+        else if(e.key === "Escape") {
+            selected.classList.remove("selected");
+            selected = null;
+        }
     });
-    container.addEventListener("drop", function(e) {
-        e.preventDefault();
-        lastDragged.classList.remove("incorrect");
-        lastDragged.classList.remove("correct");
-        if(id !== lastID) return;
-        const parent = lastDragged.parentNode;
-        console.log(parent)
-        if(!this.classList.contains("empty")) {
-            // Swap
-            const block1 = parent.firstChild;
-            const block2 = this.firstChild;
-            block2.classList.remove("incorrect");
-            block2.classList.remove("correct");
-            block1.remove();
-            block2.remove();
-            parent.appendChild(block2);
-            this.appendChild(block1);
-            return;
-        };
-        parent.classList.add("empty");
-        parent.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-        lastDragged.remove();
-        e.target.textContent = "";
-        e.target.appendChild(lastDragged);
-        e.target.classList.remove("empty");
-    });
-    if(child) {
-        container.textContent = "";
+    if (child) {
+        container.textContent = emptify(child.textContent);
         container.appendChild(child);
     }
     else {
@@ -115,46 +247,55 @@ const createContainer = (child, id) => {
 };
 
 const constructQuiz = (element, id) => {
+    quizContainers[id] = [];
     const text = element.textContent;
     element.textContent = "";
-    const {options, answers, stream} = parseLayout(text);
+    const { options, answers, stream } = parseLayout(text);
     const checks = [];
-    for(let i = 0; i < stream.length; i++) {
+    for (let i = 0; i < stream.length; i++) {
         const current = stream[i];
-        if(current.type === "plain") {
+        if (current.type === "plain") {
             const span = document.createElement("span");
             span.textContent = current.value;
             element.appendChild(span);
         }
-        else if(current.type === "input") {
+        else if (current.type === "input") {
             const container = createContainer(null, id);
             element.appendChild(container);
             checks.push(container);
+            quizContainers[id].push(container);
         }
     }
     element.appendChild(document.createTextNode("\n"));
-    for(let i = 0; i < options.length; i++) {
+    for (let i = 0; i < options.length; i++) {
         const option = options[i];
-        element.appendChild(createContainer(createBlock(option, id), id));
+        const container = createContainer(createBlock(option, id), id);
+        element.appendChild(container);
         element.appendChild(document.createTextNode(" "));
+        quizContainers[id].push(container);
     }
     const check = document.createElement("button");
     check.textContent = "-Check-";
     const gradeQuiz = () => {
         let correct = true;
-        for(let i = 0; i < answers.length; i++) {
+        for (let i = 0; i < answers.length; i++) {
             const expected = answers[i];
-            const actual = checks[i].firstChild?.textContent;
-            if(expected === actual) checks[i].firstChild.classList.add("correct");
-            else if(checks[i].firstChild.classList) checks[i].firstChild.classList.add("incorrect");
+            const checked = checks[i].lastChild;
+            const actual = checked?.textContent;
+            if (expected === actual) checked.classList.add("correct");
+            else if (checked.classList) checked.classList.add("incorrect");
+            else checked.parentNode.classList.add("missing");
             correct &&= (expected === actual);
         }
-        if(correct) alert("All correct! :)");
+        if (correct) alert("All correct! :)");
         else alert("Try again...");
     };
-    check.addEventListener("mouseup", gradeQuiz);
+    check.addEventListener("mouseup", (e) => {
+        e.stopPropagation();
+        gradeQuiz();
+    });
     check.addEventListener("keydown", (e) => {
-        if(e.key === "Enter") gradeQuiz();
+        if (e.key === "Enter") gradeQuiz();
     });
     element.appendChild(check);
 }
