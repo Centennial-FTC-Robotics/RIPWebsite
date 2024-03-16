@@ -91,12 +91,24 @@ code {
     background: #f1f1f1;
 }
 
+.dark ::-webkit-scrollbar-track {
+    background: #0e0e0e;
+}
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #888;
 }
 
+.dark ::-webkit-scrollbar-thumb {
+    background: #777;
+}
+
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
 }

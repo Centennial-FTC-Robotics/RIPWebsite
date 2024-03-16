@@ -1,11 +1,11 @@
 window.onload = () => {
     const change = (mode) => {
         if(mode === "dark") {
-            document.body.classList.add("dark");
+            document.querySelector("html").classList.add("dark");
             document.querySelector("html").style["color-scheme"] = "dark";
         }
         else {
-            document.body.classList.remove("dark");
+            document.querySelector("html").classList.remove("dark");
             document.querySelector("html").style["color-scheme"] = "light";
         }
     }
