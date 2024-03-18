@@ -162,14 +162,15 @@ const createBlock = (text, id) => {
     block.textContent = text;
     block.classList.add("block");
     block.addEventListener("touchstart", (e) => {
-        initTransBlock(e.target);
+        lastDragged = e.target;
+        initTransBlock(lastDragged);
         lastChangedTouches = e.touches;
     });
-    block.addEventListener("touchmove", (e) => {
-        e.preventDefault();
+    document.addEventListener("touchmove", (e) => {
+        if(lastDragged !== null) e.preventDefault();
         const shiftX = e.changedTouches.item(0).clientX - lastChangedTouches.item(0).clientX;
         const shiftY = e.changedTouches.item(0).clientY - lastChangedTouches.item(0).clientY;
-        translateBlock(e.target, shiftX, shiftY);
+        translateBlock(lastDragged, shiftX, shiftY);
         lastChangedTouches = e.changedTouches;
 
         if (Math.random() < 0.001) {
@@ -180,13 +181,17 @@ const createBlock = (text, id) => {
                 else break;
             }
         }
-    });
-    block.addEventListener("touchcancel", (e) => {
-        snapBlock(e.target, id, true);
-    })
-    block.addEventListener("touchend", (e) => {
-        snapBlock(e.target, id);
-    });
+    }, {passive: false});
+    document.addEventListener("touchcancel", (e) => {
+        if(!lastDragged) return;
+        snapBlock(lastDragged, id, true);
+        lastDragged = null;
+    }, {passive: false});
+    document.addEventListener("touchend", (e) => {     
+        if(!lastDragged) return;   
+        snapBlock(lastDragged, id);
+        lastDragged = null;
+    }, {passive: false});
     block.addEventListener("mousedown", (e) => {
         e.preventDefault();
         initTransBlock(e.target);
