@@ -36,4 +36,32 @@ window.onload = () => {
     });
     if(mode === "dark") toggle.click();
     document.body.appendChild(toggle);
+
+    const date = new Date();
+    if(date.getMonth() + 1 === 4 && date.getDate() === 1) {
+        const style = document.createElement("style");
+        style.textContent = `
+        *:not(body) {
+            transition: filter 2s;
+        }
+
+        *:not(body):hover {
+            animation: egg 1s infinite;
+            filter: blur(4px);
+        }
+
+        @keyframes egg {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-1deg);
+            }
+            75% {
+                transform: rotate(1deg);
+            }
+        }
+        `;
+        document.head.appendChild(style);
+    }
 };
