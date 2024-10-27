@@ -26,8 +26,17 @@
     width: 250px;
 }
 
+.dark #about-us div a {
+    color: black;
+}
+
 #about-us div a p {
     width: 40px;
+}
+
+.dark #about-us {
+    color: black;
+    background-color: #ff3f3f;
 }
 
 #about-us div a, #about-us div a p {
@@ -60,6 +69,10 @@
     border-radius: 15px;
 }
 
+.dark #about-us img {
+    filter: brightness(0.8);
+}
+
 #want-to-join {
     background-color: rgba(66, 47, 235, 0.711);
     padding: 20px;
@@ -68,6 +81,11 @@
     color: white;
     font-family: 'Poppins', sans-serif;
     border-radius: 15px;
+}
+
+.dark #want-to-join {
+    background-color: #796bf1;
+    color: black;
 }
 
 #want-to-join div {

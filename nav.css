@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+body.dark {
+    background-color: black;
+}
+
 /* Header */
 #header {
     text-align: center;
@@ -14,10 +18,18 @@ hr {
     font-family: 'Montserrat', sans-serif;
 }
 
+.dark #nav {
+    background-color: black;
+}
+
 #logotext {
     display: inline-block;
     text-align: left;
     margin-left: 30px;
+}
+
+.dark #logotext {
+    color: white;
 }
 
 #links {
@@ -41,9 +53,17 @@ hr {
     color: black;
 }
 
+.dark .link a {
+    color: white;
+}
+
 .link a:hover {
     color: black;
     text-decoration: underline;
+}
+
+.dark .link a:hover {
+    color: white;
 }
 
 /* @media only screen and (min-width: 922px) and (max-width: 1136px) {
