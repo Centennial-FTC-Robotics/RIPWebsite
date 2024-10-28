@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/imgs/2022-2023_logo.png" rel="icon" type="image/png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <title>Attendance - CHS Robotics Website</title>
+    <link href="ourteam.css" rel="stylesheet" type="text/css">
+    <link href="common.css" rel="stylesheet" type="text/css">
+    <script src="/auto-bright.js"></script>
+</head>
+<body>
+    <div id="nav"></div>
+    <script>
+        $('#nav').load('nav.html');
+
+        const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQHirBQ3OoJ2oAD1pObz6dBcOJx-WBi_9-Y7IvlvyU6IzA8rmLSF9HYFypSP_Oq4RlIfAbn--ZFZQS2/pub?output=csv";
+
+        fetch(sheetUrl)
+            .then(response => response.text())
+            .then(data => {
+                const rows = data.trim().split('\n');
+                
+                const links = rows.map(row => {
+                    const [date, link] = row.split(',');
+                    return { date: date.trim(), link: link.trim() };
+                });
+                
+                const today = new Date();
+                const todayText = today.getMonth() + 1 + '/' + today.getDate();
+                const todayLink = links.find(link => link.date === todayText)?.link;
+
+                if (todayLink) {
+                    document.querySelector('#output').innerText = "Today's link was found: Redirecting...";
+                    setTimeout(() => {
+                        window.location.href = todayLink;
+                    }, 1000);
+                } else {
+                    document.querySelector('#output').innerText = "No attendance form available for today.";
+                }
+            })
+            .catch(error => {
+                document.querySelector('#output').innerText = "Error loading attendance form.";
+                console.error(error);
+            });
+
+    </script>
+    <main id="intro">
+        <h1>Log Attendance</h1>
+        <p id="output"></p>
+    </main>
+</body>
+</html>
